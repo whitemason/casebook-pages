@@ -65,6 +65,8 @@ author: taekssi           # 글쓴이의 GitHub 이름. 글 화면 머리 줄에
 - 스킬 형식: `name`은 폴더 이름과 같은 영문 소문자 · 하이픈(64자 이하), `description`은 1,024자 이하로 언제 쓰는지 적어요. zip 안에는 폴더째(`casebook-press-skill/SKILL.md`) 들어가야 해요.
 - 이름에는 항상 `-skill` · `-prompt`를 붙여요. `casebook-press`만 단독으로 쓰지 않아요.
 
+- `public/casebook-case-prompts.md`(블로그 글 "원작 소설을 플레이할 수 있는 추리 사건으로 만들기"의 프롬프트 모음)는 `npm run agent-files`로 만드는 파일이 아니라 손으로 관리하는 파일이에요. 글의 프롬프트를 고치면 이 파일도 같이 고쳐요.
+
 ### 그 밖에
 
 - 홈에는 이메일 주소를 쓰지 않아요. 연락처는 처리방침의 "11. 개인정보 보호책임자"에만 있어요.
