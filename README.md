@@ -3,7 +3,8 @@
 Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 개발 블로그가 있어요.
 [Astro](https://astro.build)로 만들고, `main`에 푸시하면 GitHub Actions가 빌드해서 GitHub Pages에 배포해요.
 
-- 사이트: https://x-0o0.github.io/casebook-legal/
+- 사이트: https://casebook.whitemason.club/
+- 옛 주소 https://x-0o0.github.io/casebook-legal/ 은 개인 사이트 저장소(x-0o0/x-0o0.github.io)의 넘겨주기 페이지가 같은 경로의 새 주소로 넘겨줘요.
 - 로컬 실행(Node 22.12 이상): `npm install` 다음 `npm run dev`
 
 ## 지켜야 할 규칙

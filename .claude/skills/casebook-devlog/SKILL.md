@@ -73,4 +73,4 @@ author: <글쓴이의 GitHub 닉네임. 운영자는 x-0o0>
    - 운영자 쪽 세션은 PM 세션을 거쳐 운영자의 승인을 받습니다.
    - 팀원은 운영자에게 따로 승인을 받은 뒤에 올립니다.
 2. 승인을 받으면 `git pull` → `npm run build` → 커밋 → 푸시 직전에 다시 `git pull` → 푸시 순서로 올립니다. 다른 사람의 커밋을 덮어쓰지 않고, force push는 하지 않습니다.
-3. 배포가 끝나면 `https://x-0o0.github.io/casebook-legal/blog/<파일 이름>.html`이 열리는지, 블로그 목록에 보이는지 확인하고 결과를 알립니다.
+3. 배포가 끝나면 `https://casebook.whitemason.club/blog/<파일 이름>.html`이 열리는지, 블로그 목록에 보이는지 확인하고 결과를 알립니다.

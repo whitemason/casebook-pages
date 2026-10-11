@@ -8,7 +8,7 @@ export const APP_STORE_URL = 'https://apps.apple.com/kr/app/casebook/id681876075
 // 홈에는 App Store 버튼 밑에 TestFlight 텍스트 링크를 둔다. (App Store 주소가 없으면 TestFlight 버튼)
 export const TESTFLIGHT_URL = 'https://testflight.apple.com/join/J6ZYwWtA';
 
-/** base(/casebook-legal/)를 붙인 사이트 안 주소 */
+/** base(astro.config.mjs)를 붙인 사이트 안 주소 */
 export function url(path = '') {
   return import.meta.env.BASE_URL.replace(/\/$/, '') + '/' + path.replace(/^\//, '');
 }
