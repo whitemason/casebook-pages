@@ -32,7 +32,8 @@ export function formatDate(date: Date) {
   return new Intl.DateTimeFormat('ko-KR', { year: 'numeric', month: 'long', day: 'numeric', timeZone: 'Asia/Seoul' }).format(date);
 }
 
-/** 한국어 기준 1분에 500자 정도로 잡은 읽는 시간 */
+/** 한국어 기준 1분에 500자 정도로 잡은 읽는 시간. 코드 블록(``` · ~~~)은 훑어보는 부분이라 세지 않는다. */
 export function readingMinutes(body = '') {
-  return Math.max(1, Math.round(body.replace(/\s+/g, '').length / 500));
+  const prose = body.replace(/^(```|~~~)[^\n]*\n[\s\S]*?^\1[^\n]*$/gm, '');
+  return Math.max(1, Math.round(prose.replace(/\s+/g, '').length / 500));
 }
