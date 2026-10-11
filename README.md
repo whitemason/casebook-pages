@@ -1,4 +1,4 @@
-# casebook-legal
+# casebook-pages
 
 Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 개발 블로그가 있어요.
 [Astro](https://astro.build)로 만들고, `main`에 푸시하면 GitHub Actions가 빌드해서 GitHub Pages에 배포해요.

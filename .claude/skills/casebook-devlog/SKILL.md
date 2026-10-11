@@ -1,6 +1,6 @@
 ---
 name: casebook-devlog
-description: Casebook 개발 블로그의 "개발일지" 글을 쓰고 공개할 때 사용합니다. 하루 동안 한 작업을 모아 Apple Developer Article 톤의 짧은 글로 정리하고, 내부 정보를 걸러 낸 뒤 승인을 받아 casebook-legal 사이트에 올립니다. "개발일지 써 줘", "오늘 작업 블로그로 정리해 줘" 같은 요청에 씁니다.
+description: Casebook 개발 블로그의 "개발일지" 글을 쓰고 공개할 때 사용합니다. 하루 동안 한 작업을 모아 Apple Developer Article 톤의 짧은 글로 정리하고, 내부 정보를 걸러 낸 뒤 승인을 받아 문서 사이트(casebook-pages)에 올립니다. "개발일지 써 줘", "오늘 작업 블로그로 정리해 줘" 같은 요청에 씁니다.
 ---
 
 # Casebook 개발일지 쓰기
