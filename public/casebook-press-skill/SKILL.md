@@ -13,7 +13,7 @@ Casebook 사건을 만들거나 검토할 때 아래 "사건 제작 기준"을 �
 
 ## 사건 제작 기준
 
-이 기준은 Casebook 문서 사이트의 "사건 제작 가이드"(https://x-0o0.github.io/casebook-legal/guide.html)를 옮긴 것이에요. 공공 사건기록보관소에 올릴 사건을 만들 때 지키면 좋은 기준이에요.
+이 기준은 Casebook 문서 사이트의 "사건 제작 가이드"(https://x-0o0.github.io/casebook-legal/guide.html)를 옮긴 것이에요. 공공 사건기록보관소에 올릴 사건을 만들 때 지키면 좋은 기준이에요. 보관소에 올린 사건은 운영진이 이 가이드로 확인한 뒤 공개해요.
 
 ### 핵심
 
