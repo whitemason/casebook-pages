@@ -1,78 +1,50 @@
 # casebook-pages
 
-Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 개발 블로그가 있어요.
+Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 사건 제작 가이드, 개발 블로그가 있어요.
 [Astro](https://astro.build)로 만들고, `main`에 푸시하면 GitHub Actions가 빌드해서 GitHub Pages에 배포해요.
 
 - 사이트: https://casebook.whitemason.club/
 - 옛 주소 https://x-0o0.github.io/casebook-legal/ 은 개인 사이트 저장소(x-0o0/x-0o0.github.io)의 넘겨주기 페이지가 같은 경로의 새 주소로 넘겨줘요.
-- 로컬 실행(Node 22.12 이상): `npm install` 다음 `npm run dev`
 
-## 지켜야 할 규칙
+## 로컬에서 실행하기
 
-### 주소는 바꾸지 않아요
+Node 22.12 이상이 필요해요.
 
-`privacy.html`, `terms.html`, `#support` 주소는 App Store Connect에 등록돼 있어요.
-
-- 파일 이름과 주소를 바꾸지 마세요. `astro.config.mjs`의 `build.format: 'preserve'`가 이 주소를 지켜요.
-- 배포 workflow는 빌드 결과에 두 파일이 없으면 배포를 멈춰요.
-- 처리방침의 절 앵커(`#p1`~`#p12`)도 홈에서 링크하고 있으니 그대로 둬요.
-
-### 처리방침 · 약관 본문은 함부로 고치지 않아요
-
-`src/pages/privacy.astro`와 `src/pages/terms.astro`의 본문은 법적 문서예요. 레이아웃만 고치고, 문구를 바꾸려면 운영팀의 승인을 먼저 받으세요.
-
-### 개발 블로그 글
-
-글은 `src/content/blog/`에 마크다운으로 써요. 파일 이름이 주소가 돼요(`blog/<파일 이름>.html`).
-
-```yaml
----
-title: "동사로 시작하는 작업형 제목"
-date: 2026-10-06
-category: 개발일지        # 개발일지 | 작업 기록 | 릴리스 노트
-summary: 한 줄 요약
-cover: some-cover.webp    # src/assets/images 안의 파일 이름
-author: taekssi           # 글쓴이의 GitHub 이름. 글 화면 머리 줄에 "글 taekssi"로 보여요
----
+```sh
+npm install --no-package-lock
+npm run dev      # 미리 보기
+npm run build    # 빌드(커밋 전에 경고 없이 성공해야 해요)
 ```
 
-- **개발일지는 모두 같은 커버를 써요.** `개발일지` 글은 `cover`를 비워 두면 자동으로 `devlog-cover.webp`가 들어가요. 다른 그림을 적으면 빌드가 실패해요. 이 규칙은 `src/content.config.ts`에 들어 있어요.
-- 다른 카테고리는 `src/assets/images/`에 그림을 넣고 `cover`에 파일 이름을 적어요.
-- `author`: 글쓴이의 GitHub 이름(프로필에 보이는 닉네임). 실명 대신 필명도 돼요. 모든 글에 적어요(운영자 글은 `x-0o0`). 적으면 글 화면 머리 줄에 "글 <이름>"으로 보여요.
-- 쓰지 않게 된 그림 파일도 지우지 말고 둬요.
-- 본문 그림은 `src/assets/images/`에 넣고 `![대체 텍스트](../../assets/images/파일)`로 써요. 밝은 · 어두운 모드용 그림이 따로 있으면 이름 끝을 `-light` · `-dark`로 맞춰 두 줄 다 넣어요. 화면에는 시스템 설정에 맞는 쪽만 보여요. 같은 내용의 그림을 다른 이름으로 하나 더 두지 마세요. Astro가 같은 그림을 한 파일로 합치면서 `-light` · `-dark` 이름이 사라질 수 있어요.
-- 톤은 Apple Developer Article처럼 써요.
-  - 동사형 제목, 한 줄 요약, 개요, 작업형 소제목
-  - 필요하면 `> **중요:**` · `> **참고:**` 상자와 짧은 코드
-  - 합니다체로 써요.
-- 분량: 개발일지는 3분 안팎으로 읽히게 써요. 작업 기록(참고용 글)은 길이 제한이 없어요.
-- 글 머리 줄의 읽는 시간은 1분에 500자로 계산하고, 코드 블록은 세지 않아요.
-- 이메일, 사용자 · 계정 식별자, 서버 테이블 이름 · SQL, 운영 채널, 비밀 값 이름, 커밋 번호 같은 내부 정보는 쓰지 않아요.
-- Slack처럼 처리방침에 공개된 외부 서비스(위탁처) 이름은 써도 돼요. 그 서비스 안의 채널 이름과 내부 식별자는 쓰지 않아요.
+## 규칙은 어디에 있나요
 
-### 사건 만들기 가이드
+규칙의 원본은 아래 파일이에요. README는 사람을 위한 요약이라, 규칙이 바뀌면 원본을 고쳐요.
 
-`guide.html`(`src/pages/guide.astro`)은 사건을 직접 만드는 사람을 위한 작성 기준이에요. 상단 메뉴의 "사건 만들기"와 홈의 문서 칸에서 링크해요.
+| 파일 | 내용 |
+|---|---|
+| `AGENTS.md` | 모든 작업에 필요한 규칙: 바꾸면 안 되는 주소 · 앵커, 결정 권한, 함께 작업할 때, 공개하면 안 되는 정보 |
+| `.claude/rules/legal-docs.md` | 처리방침 · 약관 |
+| `.claude/rules/blog.md` | 블로그 글 머리말 · 그림 · 톤 · 분량 · 링크 |
+| `.claude/rules/guide-agent-files.md` | 사건 제작 가이드와 AI 에이전트용 내려받기 파일 |
+| `.claude/rules/site-address.md` | 사이트 주소 · 빌드 · 배포 설정 |
+| `.claude/skills/` | 여러 단계 작업 절차: 처리방침 · 약관 바꾸기(`legal-update`), 블로그 글 공개(`publish-post`), 개발일지 쓰기(`casebook-devlog`) |
 
-- 숫자(채점 · 힌트 방식, 난이도표, 의뢰 내용 길이)는 앱 규칙과 사건 만들기 난이도표에 맞춰요. 앱 규칙이 바뀌면 함께 고쳐요.
-- 아직 앱에 없는 기능은 쓰지 않아요.
-- 예시는 지어낸 사건으로만 들고, 공개 전 사건의 정답이나 기존 작품의 설정은 쓰지 않아요.
-- 장 앵커 `#g1`~`#g9`는 바꾸지 않아요. 앱과 운영진의 사건 심사 항목이 이 앵커로 링크해요.
+## 꼭 알아 둘 것 (요약)
 
-### 사건 제작 가이드와 AI 에이전트용 파일
+- `privacy.html` · `terms.html` · `/#support` 주소와 처리방침 `#p1`~`#p12`, 가이드 `#g1`~`#g9` 앵커는 App Store와 앱이 써요. 바꾸지 않아요.
+- 처리방침 · 약관 본문은 운영자의 승인 없이 고치지 않아요.
+- 블로그 글은 `src/content/blog/`에 마크다운으로 써요. 파일 이름이 주소가 돼요(`blog/<파일 이름>.html`).
 
-`src/pages/guide.astro`(사건 제작 가이드)의 기준은 AI 에이전트용 파일로도 내려받을 수 있어요.
+  ```yaml
+  ---
+  title: "동사로 시작하는 작업형 제목"
+  date: 2026-10-06
+  category: 개발일지        # 개발일지 | 작업 기록 | 릴리스 노트
+  summary: 한 줄 요약
+  author: x-0o0             # 글쓴이의 GitHub 이름
+  cover: some-cover.webp    # 개발일지는 비워 둬요(공통 커버가 자동으로 들어가요)
+  ---
+  ```
 
-- 기준 원본: `agent/case-guide-criteria.md`
-- 만드는 파일: `public/casebook-press-prompt.md`(프롬프트), `public/casebook-press-skill/SKILL.md`(Claude Code 스킬), `public/casebook-press-skill.zip`(Claude 앱 스킬)
-- **가이드 본문을 고치면 기준 원본도 같은 뜻으로 고치고 `npm run agent-files`를 실행해 세 파일을 다시 만들어요.** 만들어진 파일은 직접 고치지 않아요.
-- 스킬 형식: `name`은 폴더 이름과 같은 영문 소문자 · 하이픈(64자 이하), `description`은 1,024자 이하로 언제 쓰는지 적어요. zip 안에는 폴더째(`casebook-press-skill/SKILL.md`) 들어가야 해요.
-- 이름에는 항상 `-skill` · `-prompt`를 붙여요. `casebook-press`만 단독으로 쓰지 않아요.
-
-- `public/casebook-case-prompts.md`(블로그 글 "원작 소설을 플레이할 수 있는 추리 사건으로 만들기"의 프롬프트 모음)는 `npm run agent-files`로 만드는 파일이 아니라 손으로 관리하는 파일이에요. 글의 프롬프트를 고치면 이 파일도 같이 고쳐요.
-
-### 그 밖에
-
-- 홈에는 이메일 주소를 쓰지 않아요. 연락처는 처리방침의 "11. 개인정보 보호책임자"에만 있어요.
-- RSS는 쓰지 않아요.
-- App Store · TestFlight 링크는 `src/consts.ts`의 `APP_STORE_URL`, `TESTFLIGHT_URL`에서 바꿔요.
+- 사건 제작 가이드(`src/pages/guide.astro`, 상단 메뉴 "사건 제작 가이드")를 고치면 `agent/case-guide-criteria.md`도 같은 뜻으로 고치고 `npm run agent-files`로 내려받기 파일을 다시 만들어요.
+- App Store · TestFlight 링크는 `src/consts.ts`의 `APP_STORE_URL` · `TESTFLIGHT_URL`에서 바꿔요.
