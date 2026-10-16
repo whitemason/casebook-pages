@@ -13,7 +13,7 @@ paths:
 ---
 title: "동사로 시작하는 작업형 제목"
 date: YYYY-MM-DD
-category: 개발일지        # 개발일지 | 작업 기록 | 릴리스 노트
+category: 개발일지        # 개발일지 | 작업 기록 | 릴리스 노트 | Press 버전
 summary: 한 줄 요약
 author: x-0o0             # 글쓴이의 GitHub 닉네임(필명 가능). 모든 글에 적어요
 cover: some-cover.webp    # 개발일지는 비워 둬요
@@ -22,6 +22,7 @@ cover: some-cover.webp    # 개발일지는 비워 둬요
 
 - 개발일지 커버는 자동으로 `devlog-cover.webp`예요. 다른 그림을 적으면 빌드가 실패해요(`src/content.config.ts`).
 - 다른 카테고리는 `src/assets/images/`에 그림을 넣고 `cover`에 파일 이름만 적어요.
+- `Press 버전` 글은 Casebook Press 판을 서버에 배포할 때마다 하나씩 써요(파일 이름 `press-edition-<N>.md`, 제목 "Casebook Press N판 …"). 글 끝에 전체 판 기록 링크 `../press/versions.html`을 달아요. 판 정보는 casebook-press `release/versions.json`과 같게 써요.
 - 본문 그림: `![대체 텍스트](../../assets/images/파일)`. 밝은 · 어두운 버전은 이름 끝을 `-light` · `-dark`로 맞춰 두 줄 다 넣어요. 같은 내용의 그림을 다른 이름으로 두지 않아요(Astro가 합쳐서 `-light` · `-dark`가 사라져요). 큰 그림은 폭 2200px 정도로 줄여 넣어요.
 - 톤: Apple Developer Article처럼. 동사형 제목, 개요, 작업형 소제목, `> **중요:**` · `> **참고:**` 상자, 합니다체.
 - 분량: 개발일지는 3분 안팎, 작업 기록은 제한 없음. 읽는 시간은 1분에 500자, 코드 블록은 세지 않아요.
