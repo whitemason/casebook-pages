@@ -1,7 +1,7 @@
 ---
 title: "Casebook Press 1판 살펴보기"
 date: 2026-10-16
-category: Press 버전
+category: MCP 릴리스 노트
 summary: AI 앱에 연결해 사건 파일을 만드는 Casebook Press의 첫 시험 판에 들어간 도구와 기준을 정리합니다.
 author: taekssi
 ---

@@ -39,7 +39,7 @@ npm run build    # 빌드(커밋 전에 경고 없이 성공해야 해요)
   ---
   title: "동사로 시작하는 작업형 제목"
   date: 2026-10-06
-  category: 개발일지        # 개발일지 | 작업 기록 | 릴리스 노트 | Press 버전
+  category: 개발일지        # 개발일지 | 작업 기록 | 릴리스 노트 | MCP 릴리스 노트
   summary: 한 줄 요약
   author: x-0o0             # 글쓴이의 GitHub 이름
   cover: some-cover.webp    # 개발일지는 비워 둬요(공통 커버가 자동으로 들어가요)

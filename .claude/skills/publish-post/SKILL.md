@@ -1,6 +1,6 @@
 ---
 name: publish-post
-description: Casebook 개발 블로그에 작업 기록 · 릴리스 노트 · Press 버전 글을 공개하거나 이미 공개한 글을 고칠 때 사용합니다. 원고 · 커버 · 본문 그림(-light/-dark)을 넣고, 규칙을 점검하고, 배포하고 확인하는 순서를 따릅니다. 개발일지는 casebook-devlog 스킬을 먼저 따르고, 공개 단계는 이 스킬을 함께 씁니다.
+description: Casebook 개발 블로그에 작업 기록 · 릴리스 노트 · MCP 릴리스 노트 글을 공개하거나 이미 공개한 글을 고칠 때 사용합니다. 원고 · 커버 · 본문 그림(-light/-dark)을 넣고, 규칙을 점검하고, 배포하고 확인하는 순서를 따릅니다. 개발일지는 casebook-devlog 스킬을 먼저 따르고, 공개 단계는 이 스킬을 함께 씁니다.
 ---
 
 # 블로그 글 공개하기
@@ -9,7 +9,7 @@ description: Casebook 개발 블로그에 작업 기록 · 릴리스 노트 · P
 
 1. `git pull --ff-only`
 2. 원고를 `src/content/blog/<영문-kebab-case>.md`로 넣어요. 파일 이름이 주소가 돼요. 넘겨받은 원고는 문장 그대로 넣고, `cmp`로 원본과 같은지 확인해요.
-3. 커버(작업 기록 · 릴리스 노트 · Press 버전): `src/assets/images/`에 넣고 머리말 `cover`와 이름을 맞춰요. 개발일지는 `cover`를 비워요.
+3. 커버(작업 기록 · 릴리스 노트 · MCP 릴리스 노트): `src/assets/images/`에 넣고 머리말 `cover`와 이름을 맞춰요. 개발일지는 `cover`를 비워요.
 4. 본문 그림: 넣기 전에 그림을 열어 봐요. 밝은 · 어두운 쌍이 같은 내용인지, 엉뚱한 그림이 섞이지 않았는지 확인해요. 폭 4400px 같은 큰 그림은 `sips --resampleWidth 2200`으로 줄여요. 이름 끝 `-light` · `-dark`를 지켜요.
 
 ## 2. 점검하기 (고치기 전에 알리기)
