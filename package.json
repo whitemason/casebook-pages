@@ -11,7 +11,8 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "agent-files": "node scripts/agent-files.mjs"
+    "agent-files": "node scripts/agent-files.mjs",
+    "press-versions": "node scripts/sync-press-versions.mjs"
   },
   "dependencies": {
     "astro": "^7.3.5"

@@ -48,3 +48,4 @@ npm run build    # 빌드(커밋 전에 경고 없이 성공해야 해요)
 
 - 사건 제작 가이드(`src/pages/guide.astro`, 상단 메뉴 "사건 제작 가이드")를 고치면 `agent/case-guide-criteria.md`도 같은 뜻으로 고치고 `npm run agent-files`로 내려받기 파일을 다시 만들어요.
 - App Store · TestFlight 링크는 `src/consts.ts`의 `APP_STORE_URL` · `TESTFLIGHT_URL`에서 바꿔요.
+- Press 버전 페이지(`press/versions.html`)의 데이터는 casebook-press의 Press 판 태그에서 `npm run press-versions -- press-N`으로 가져와요. `src/data/press-versions.json`은 손으로 고치지 않아요. 공개한 뒤에는 주소와 판 앵커(`#press-N`)를 바꾸지 않아요.

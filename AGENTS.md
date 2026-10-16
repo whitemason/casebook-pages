@@ -12,6 +12,7 @@ Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용�
 - 설치: `npm install --no-package-lock` (저장소에 잠금 파일이 없어요. 만들지 마세요)
 - 미리 보기: `npm run dev` / 빌드: `npm run build` (커밋 전에 경고 없이 성공해야 해요)
 - 가이드 내려받기 파일 다시 만들기: `npm run agent-files`
+- Press 버전 페이지 데이터 가져오기: `npm run press-versions -- press-N` (casebook-press의 Press 판 태그에서 `src/data/press-versions.json`을 가져와요)
 - 배포: `main`에 푸시하면 GitHub Actions(`.github/workflows/deploy.yml`)가 빌드해서 GitHub Pages에 올려요. 빌드 결과에 `index.html` · `privacy.html` · `terms.html`이 없으면 배포를 멈춰요.
 - 배포 뒤에는 바꾼 페이지가 실제 사이트에서 200으로 열리는지 확인해요.
 
@@ -28,12 +29,15 @@ Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용�
 | `agent/case-guide-criteria.md` | 가이드 기준 원본(AI 에이전트용 파일의 원본) |
 | `public/` | 그대로 올라가는 파일(내려받기 파일, favicon) |
 | `scripts/agent-files.mjs` | 가이드 원본 → 프롬프트 · 스킬 · zip을 만드는 스크립트 |
+| `src/pages/press/versions.astro` · `src/data/press-versions.json` | Casebook Press 판 기록 페이지와 그 데이터(casebook-press 판 태그의 사본, 손으로 고치지 않음) |
+| `scripts/sync-press-versions.mjs` | Press 판 태그 → `src/data/press-versions.json` |
 
 ## 바꾸면 안 되는 것
 
 - 주소: `privacy.html`, `terms.html`, `/#support`는 App Store Connect와 앱에 등록돼 있어요. 파일 이름과 경로를 바꾸지 않아요(`astro.config.mjs`의 `build.format: 'preserve'`가 지켜요).
 - 앵커: 처리방침 `#p1`~`#p12`, 가이드 `#g1`~`#g9`, 홈 `#support`. 앱 · 서버 · 홈이 이 앵커로 링크해요.
 - 처리방침 · 약관 본문: 운영자의 승인 없이 한 글자도 바꾸지 않아요. 레이아웃만 고칠 수 있어요.
+- Press 버전: 공개한 뒤에는 `press/versions.html`과 판 앵커 `#press-N`을 바꾸지 않아요. 판 기록은 casebook-press가 원본이라(흐름은 casebook-press → 이 사이트 한 방향) `src/data/press-versions.json`을 손으로 고치지 않고 `npm run press-versions -- press-N`으로 다시 가져와요. 서버에 배포된 판만 올려요(준비 중인 판은 페이지에 보이지 않아요).
 
 ## 결정 권한
 

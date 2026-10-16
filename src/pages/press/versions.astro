@@ -1,0 +1,96 @@
+---
+// Casebook Press 판 기록. 데이터는 casebook-press의 Press 판 태그에서 가져온 src/data/press-versions.json이다
+// (npm run press-versions -- press-N). 여기서 고치지 않는다. 배포된 판만 보이고, 준비 중인 판은 보이지 않는다.
+// 주소(press/versions.html)와 판 앵커(#press-N)는 한 번 공개하면 바꾸지 않는다.
+import LegalLayout from '../../layouts/LegalLayout.astro';
+import data from '../../data/press-versions.json';
+
+interface Edition {
+  edition: number;
+  date: string | null;
+  status: string;
+  rules: number;
+  formats: number[];
+  minApp: Record<string, string>;
+  breaking: boolean;
+  changes: string[];
+}
+
+const editions = (data.editions as Edition[]).filter((e) => e.status !== '준비 중');
+const toc = [
+  { id: 'about', text: '판 번호 읽는 법' },
+  ...editions.map((e) => ({ id: `press-${e.edition}`, text: `Press ${e.edition}판` })),
+];
+const formatDate = (iso: string | null) => {
+  if (!iso) return '';
+  const [y, m, d] = iso.split('-').map(Number);
+  return `${y}년 ${m}월 ${d}일`;
+};
+---
+<LegalLayout title="Press 버전 · Casebook" description="Casebook Press(AI 앱 커넥터)의 판 기록이에요. 판마다 적용한 규칙과 바뀐 점을 적어요." current="press" toc={toc}>
+<Fragment slot="header">
+  <h1>Casebook Press 버전</h1>
+  <p>Claude · ChatGPT에 연결해 사건 파일을 만드는 Casebook Press의 판 기록이에요.</p>
+</Fragment>
+
+<div class="summary">
+  <ul>
+    <li>지금은 <strong>시험 운영</strong> 중이에요. 초대받은 사용자만 연결할 수 있어요.</li>
+    <li>판 번호는 앱 버전(예: 26.10.1)과 따로 매겨요.</li>
+  </ul>
+</div>
+
+<h2 id="about">판 번호 읽는 법</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>표기</th><th>뜻</th></tr></thead>
+  <tbody>
+    <tr><th>Press N판</th><td>Casebook Press의 판이에요. 고친 점이 하나만 있어도 새 판을 내요.</td></tr>
+    <tr><th>규칙 N판</th><td>그 판이 따르는 사건 파일 규칙의 판이에요.</td></tr>
+    <tr><th>형식 1 · 2</th><td>만들 수 있는 사건 파일 형식이에요. 잠긴 증거가 있는 사건은 형식 2이고, 앱마다 열 수 있는 형식이 달라요.</td></tr>
+    <tr><th>호환 안 됨</th><td>전에 되던 사용법이 이 판에서 달라졌다는 뜻이에요. 해당하는 판에만 적어요.</td></tr>
+  </tbody>
+</table>
+</div>
+
+{editions.length === 0 && <p>아직 공개한 판이 없어요.</p>}
+
+{editions.map((e) => (
+  <section class="edition">
+    <h2 id={`press-${e.edition}`}>
+      Press {e.edition}판
+      <span class:list={['badge', { now: e.status === '지금 판', rolled: e.status === '되돌림' }]}>{e.status}</span>
+    </h2>
+    <p class="meta">
+      {formatDate(e.date)} · 규칙 {e.rules}판
+      {e.breaking && <strong class="breaking"> · 호환 안 됨</strong>}
+    </p>
+    <ul>
+      {e.changes.map((c) => <li>{c}</li>)}
+    </ul>
+    <p class="formats">
+      {e.formats.map((f, i) => (
+        <span>{i > 0 ? ' · ' : ''}형식 {f}: 앱 {e.minApp[String(f)]} 이상</span>
+      ))}
+    </p>
+  </section>
+))}
+</LegalLayout>
+
+<style>
+  .edition + .edition { margin-top: 40px; }
+  .edition h2 { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .badge {
+    font-size: 13px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 999px;
+    background: var(--fill);
+    color: var(--fg-2);
+  }
+  .badge.now { background: var(--button-bg); color: var(--button-fg); }
+  .badge.rolled { text-decoration: line-through; }
+  .meta, .formats { color: var(--muted); font-size: 15px; }
+  .meta { margin-top: 4px; }
+  .breaking { color: var(--fg); }
+</style>
