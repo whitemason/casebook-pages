@@ -1,6 +1,6 @@
 # casebook-pages
 
-Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 사건 제작 가이드, 개발 블로그가 있어요.
+Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 사건 크리에이터 문서(사건 제작 가이드, Case Document 프로토콜), 개발 블로그가 있어요.
 
 - 사이트: https://casebook.whitemason.club/
 - 저장소: whitemason/casebook-pages (예전 x-0o0/casebook-legal, 로컬 폴더 이름은 casebook-legal 그대로일 수 있어요)
@@ -20,7 +20,7 @@ Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용�
 
 | 경로 | 내용 |
 |---|---|
-| `src/pages/` | 홈(`index.astro`), 처리방침(`privacy.astro`), 약관(`terms.astro`), 가이드(`guide.astro`), 블로그 목록 · 글, 404 |
+| `src/pages/` | 홈(`index.astro`), 처리방침(`privacy.astro`), 약관(`terms.astro`), 가이드(`guide.astro`), Case Document 프로토콜(`casedoc-protocol.astro`), 블로그 목록 · 글, 404 |
 | `src/content/blog/` | 블로그 글(마크다운). 파일 이름이 주소가 돼요(`blog/<이름>.html`) |
 | `src/content.config.ts` | 글 머리말 형식과 개발일지 커버 규칙 |
 | `src/assets/images/` | 커버 · 본문 그림 |
@@ -68,6 +68,7 @@ Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용�
 
 ## 그 밖에
 
+- Case Document 프로토콜(`src/pages/casedoc-protocol.astro`, 사건 파일 `.casedoc` 형식 설명)은 앱 코드를 그대로 옮긴 문서예요. 앱의 사건 형식(casebook-service-appleos CasebookFoundation의 `CasePackage` · `CaseFile` 등)이나 검사 규칙이 바뀌면 이 문서도 함께 고쳐요.
 - RSS는 쓰지 않아요.
 - 쓰지 않게 된 그림 파일도 지우지 않아요. 다만 같은 내용의 그림을 다른 이름으로 하나 더 두지 않아요.
 - 자세한 규칙은 경로별 rule(`.claude/rules/`)과 skill(`.claude/skills/`)에 있어요. README에는 사람을 위한 소개와 같은 규칙이 있어요.

@@ -1,6 +1,6 @@
 # casebook-pages
 
-Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 사건 제작 가이드, 개발 블로그가 있어요.
+Casebook 앱의 문서 사이트예요. 홈, 개인정보 처리방침, 이용약관, 사건 크리에이터 문서(사건 제작 가이드, Case Document 프로토콜), 개발 블로그가 있어요.
 [Astro](https://astro.build)로 만들고, `main`에 푸시하면 GitHub Actions가 빌드해서 GitHub Pages에 배포해요.
 
 - 사이트: https://casebook.whitemason.club/
@@ -25,7 +25,7 @@ npm run build    # 빌드(커밋 전에 경고 없이 성공해야 해요)
 | `AGENTS.md` | 모든 작업에 필요한 규칙: 바꾸면 안 되는 주소 · 앵커, 결정 권한, 함께 작업할 때, 공개하면 안 되는 정보 |
 | `.claude/rules/legal-docs.md` | 처리방침 · 약관 |
 | `.claude/rules/blog.md` | 블로그 글 머리말 · 그림 · 톤 · 분량 · 링크 |
-| `.claude/rules/guide-agent-files.md` | 사건 제작 가이드와 AI 에이전트용 내려받기 파일 |
+| `.claude/rules/guide-agent-files.md` | 사건 제작 가이드 · Case Document 프로토콜과 AI 에이전트용 내려받기 파일 |
 | `.claude/rules/site-address.md` | 사이트 주소 · 빌드 · 배포 설정 |
 | `.claude/skills/` | 여러 단계 작업 절차: 처리방침 · 약관 바꾸기(`legal-update`), 블로그 글 공개(`publish-post`), 개발일지 쓰기(`casebook-devlog`) |
 
@@ -46,6 +46,7 @@ npm run build    # 빌드(커밋 전에 경고 없이 성공해야 해요)
   ---
   ```
 
-- 사건 제작 가이드(`src/pages/guide.astro`, 상단 메뉴 "사건 제작 가이드")를 고치면 `agent/case-guide-criteria.md`도 같은 뜻으로 고치고 `npm run agent-files`로 내려받기 파일을 다시 만들어요.
+- 사건 제작 가이드(`src/pages/guide.astro`, 상단 메뉴 "사건 크리에이터 문서" › "사건 제작 가이드")를 고치면 `agent/case-guide-criteria.md`도 같은 뜻으로 고치고 `npm run agent-files`로 내려받기 파일을 다시 만들어요.
+- Case Document 프로토콜(`src/pages/casedoc-protocol.astro`, 사건 파일 `.casedoc` 형식 설명)은 앱 코드를 그대로 옮긴 문서예요. 앱의 사건 형식(casebook-service-appleos CasebookFoundation의 `CasePackage` · `CaseFile` 등)이나 검사 규칙이 바뀌면 이 문서도 함께 고쳐요.
 - App Store · TestFlight 링크는 `src/consts.ts`의 `APP_STORE_URL` · `TESTFLIGHT_URL`에서 바꿔요.
 - Press 버전 페이지(`press/versions.html`)의 데이터는 casebook-press의 Press 판 태그에서 `npm run press-versions -- press-N`으로 가져와요. `src/data/press-versions.json`은 손으로 고치지 않아요. 공개한 뒤에는 주소와 판 앵커(`#press-N`)를 바꾸지 않아요.
