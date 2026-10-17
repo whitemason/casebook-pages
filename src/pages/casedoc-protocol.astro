@@ -1,0 +1,352 @@
+---
+// Case Document 프로토콜. 사건 파일(.casedoc)의 구조를 사건 크리에이터에게 설명한다.
+// 내용은 앱 코드(casebook-sdk의 CasebookFoundation: CasePackage · CaseFile · Evidence · Interview · Solution ·
+// CaseHints · CaseUnlock · CaseGenre · CaseAuthor · CaseValidation · CasePackageImageIssues · ArchiveUploadLimit)를 그대로 옮겼다.
+// 앱의 형식 버전이나 검사 규칙이 바뀌면 함께 고친다. 앵커(#c1~#c10)는 공개한 뒤 바꾸지 않는다.
+import { Code } from 'astro:components';
+import LegalLayout from '../layouts/LegalLayout.astro';
+import { url } from '../consts';
+
+const toc = [
+  { id: 'c1', text: '1. 파일 한눈에 보기' },
+  { id: 'c2', text: '2. 형식 버전' },
+  { id: 'c3', text: '3. caseFile' },
+  { id: 'c4', text: '4. 증거' },
+  { id: 'c5', text: '5. 관계자와 진술' },
+  { id: 'c6', text: '6. 장르 · 선택지 · 정답 · 힌트' },
+  { id: 'c7', text: '7. 잠긴 증거(unlocks)' },
+  { id: 'c8', text: '8. 이미지' },
+  { id: 'c9', text: '9. 앱이 검사하는 것' },
+  { id: 'c10', text: '10. 예시' },
+];
+
+const genres = [
+  ['murder', '살인·사망', '범인 · 동기 · 범행 수법', 'revenge · greed · jealousy · selfDefense · coverUp', 'poison · bluntForce · stagedAccident · strangulation · firearm'],
+  ['theft', '도난·절도', '범인 · 동기 · 수법', 'greed · revenge · collectorObsession · debt · coverUp', 'forgerySwap · insiderKey · breakIn · divertedInTransit · fakeTheft'],
+  ['disappearance', '실종·행방불명', '열쇠를 쥔 인물 · 사라진 이유 · 실종의 진상', 'escapeThreat · keepSecret · elopement · inheritanceDispute · witnessedCrime', 'voluntaryHiding · kidnapping · accident · concealedMurder · assumedIdentity'],
+  ['fraud', '협박·사기·사칭', '범인 · 목적 · 수법', 'extortion · inheritanceStatus · revenge · hideSecret · romance', 'blackmailLetter · impersonation · forgedDocument · investmentFraud · conspiracy'],
+  ['cipher', '암호·문서·정보', '작성자·유출자 · 목적 · 숨긴 방법', 'sellSecrets · contactAccomplice · coverUp · prepareBlackmail · frameSomeone', 'substitutionCipher · bookCipher · invisibleInk · forgedDocument · hiddenLetters'],
+  ['lockedRoom', '저택·밀실·기이한 공간', '범인 · 동기 · 밀실 트릭', 'revenge · greed · jealousy · coverUp · inheritanceDispute', 'secretPassage · clockTampering · mechanism · lockedFromOutside · crimeAfterDiscovery'],
+  ['ghostStory', '괴담', '배후 인물 · 목적 · 괴현상의 정체', 'driveAway · seizeEstate · coverUp · revenge · prank', 'lightAndShadow · soundDevice · disguise · animal · mirrorIllusion'],
+];
+
+const example = `{
+  "formatVersion": 2,
+  "caseFile": {
+    "id": "case.glass-greenhouse",
+    "title": "유리 온실의 사라진 난초",
+    "clientName": "큐 식물원 관리인 해리엇 웨스트",
+    "briefing": "식물원 유리 온실에서 하룻밤 사이에 귀한 난초가 사라졌다. 문은 안에서 잠겨 있었다.",
+    "clientRequest": "",
+    "clientPortraitImageName": "",
+    "genre": "theft",
+    "backdropImageName": "greenhouse.jpg",
+    "sceneEvidence": [
+      {
+        "id": "evidence.cut-glass",
+        "imageName": "cut-glass.jpg",
+        "caption": "잘린 유리창",
+        "detail": "지붕 가까운 유리 한 장이 안쪽에서 잘려 있다.",
+        "immersivePlacement": { "x": 0, "y": 0.1, "z": -1 }
+      }
+    ],
+    "documentEvidence": [
+      {
+        "id": "document.ledger",
+        "title": "출입 장부",
+        "body": "밤 10시 이후 서명은 정원사 톰 한 사람뿐이다."
+      }
+    ],
+    "interviews": [
+      {
+        "id": "person.tom",
+        "personName": "톰 베이커 (정원사)",
+        "role": "suspect",
+        "portraitImageName": "tom.jpg",
+        "transcript": [
+          { "id": "l1", "speaker": "holmes", "text": "어젯밤 온실 열쇠는 누가 가지고 있었나요?" },
+          { "id": "l2", "speaker": "interviewee", "text": "제가요. 하지만 10시에 문을 잠그고 나왔습니다." }
+        ]
+      },
+      {
+        "id": "person.lucy",
+        "personName": "루시 그레이 (수집가)",
+        "role": "suspect",
+        "portraitImageName": "lucy.jpg",
+        "transcript": [
+          { "id": "l1", "speaker": "holmes", "text": "그 난초를 사려고 하셨다고요?" },
+          { "id": "l2", "speaker": "interviewee", "text": "값을 불렀다가 거절당했어요. 그뿐이에요." }
+        ]
+      }
+    ],
+    "motiveOptions": [
+      { "id": "greed", "title": "금전적 이득" },
+      { "id": "collectorObsession", "title": "수집 집착" }
+    ],
+    "methodOptions": [
+      { "id": "insiderKey", "title": "내부자의 열쇠" },
+      { "id": "breakIn", "title": "외부 침입" }
+    ],
+    "solution": {
+      "culpritID": "person.tom",
+      "motive": "greed",
+      "method": "insiderKey",
+      "keyEvidenceIDs": ["document.ledger"]
+    },
+    "hints": {
+      "culprit": "출입 장부에 남은 이름을 다시 보세요.",
+      "motive": "난초가 누구에게 팔릴 수 있었는지 생각해 보세요.",
+      "method": "잘린 유리는 어느 쪽에서 잘렸나요?"
+    },
+    "story": "정원사 톰은 수집가에게 난초를 팔기로 하고 열쇠로 온실에 들어갔다. 침입처럼 보이려고 유리를 안쪽에서 잘랐지만, 출입 장부의 서명이 그를 가리켰다.",
+    "unlocks": [
+      {
+        "evidenceID": "document.ledger",
+        "from": ["evidence.cut-glass", "person.tom"],
+        "answer": { "prompt": "장부 상자의 번호는?", "accepted": ["1887"], "match": "digits" }
+      }
+    ]
+  },
+  "images": {
+    "greenhouse.jpg": "/9j/4AAQSkZJRg...",
+    "cut-glass.jpg": "/9j/4AAQSkZJRg...",
+    "tom.jpg": "/9j/4AAQSkZJRg...",
+    "lucy.jpg": "/9j/4AAQSkZJRg..."
+  }
+}`;
+---
+<LegalLayout title="Case Document 프로토콜 · Casebook" description="Casebook 사건 파일(.casedoc)의 구조를 형식 버전 2 기준으로 설명합니다." current="casedoc" toc={toc}>
+<Fragment slot="header">
+  <h1>Case Document 프로토콜</h1>
+  <p>Casebook 사건 파일(.casedoc)의 구조를 형식 버전 2 기준으로 설명해요.</p>
+  <p>좋은 사건을 쓰는 법은 <a href={url('guide.html')}>사건 제작 가이드</a>에 있어요. 이 문서는 파일을 직접 만들거나 도구로 내보낼 때 필요한 형식만 다뤄요.</p>
+</Fragment>
+
+<div class="summary">
+  <ul>
+    <li>사건 하나는 이미지까지 담은 JSON 파일 하나예요.</li>
+    <li>잠긴 증거(<code>unlocks</code>)가 있으면 형식 버전 2, 없으면 1이에요.</li>
+    <li>이미지는 파일 이름을 키로, 내용을 Base64 문자열로 넣어요. 사건 안의 이미지 이름과 키가 같아야 해요.</li>
+    <li>공공 사건기록보관소에는 15MB까지 올릴 수 있어요.</li>
+  </ul>
+</div>
+
+<h2 id="c1">1. 파일 한눈에 보기</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>항목</th><th>내용</th></tr></thead>
+  <tbody>
+    <tr><th>확장자</th><td><code>.casedoc</code>(Casebook Case Document). 예전 확장자 <code>.sherlockcase</code>도 열 수 있지만, 새로 저장할 때는 <code>.casedoc</code>을 써요.</td></tr>
+    <tr><th>내용</th><td>UTF-8 JSON 객체 하나. 폴더가 아니라 파일 하나라서 AirDrop이나 파일 앱으로 그대로 주고받을 수 있어요.</td></tr>
+    <tr><th>크기</th><td>공공 사건기록보관소에 올릴 수 있는 파일은 15MB(15,728,640바이트)까지예요. 넘으면 "사건 파일이 너무 커요. 15MB 이하로 줄여 주세요."라고 안내해요. 기기 안에서 열고 플레이하는 데는 이 제한이 없어요.</td></tr>
+    <tr><th>모르는 키</th><td>앱은 아래 표에 없는 키를 읽을 때 무시하고, 다시 저장하면 그 키는 사라져요.</td></tr>
+  </tbody>
+</table>
+</div>
+<p>맨 위 객체의 키는 다섯 개예요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>필수</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>formatVersion</code></th><td>정수</td><td>필수</td><td>형식 버전. <a href="#c2">2장</a>을 보세요.</td></tr>
+    <tr><th><code>caseFile</code></th><td>객체</td><td>필수</td><td>사건 내용. <a href="#c3">3장</a>을 보세요.</td></tr>
+    <tr><th><code>images</code></th><td>객체(이름 → Base64)</td><td>필수</td><td>이미지 파일. 이미지가 없으면 빈 객체 <code>{"{}"}</code>. <a href="#c8">8장</a>을 보세요.</td></tr>
+    <tr><th><code>author</code></th><td>객체</td><td>선택</td><td>사건을 만든 사람 <code>{"{ \"id\": 문자열, \"name\": 문자열 }"}</code>. 앱이 채우는 칸이라 직접 만들 때는 넣지 않아요. 없으면 가져온 사람이 고칠 수 있는 내 사건으로 들어가요.</td></tr>
+    <tr><th><code>modifiedAt</code></th><td>숫자</td><td>선택</td><td>사건 내용이 마지막으로 바뀐 시각(2001년 1월 1일 UTC부터 센 초). 앱이 편집할 때 기록하니 직접 만들 때는 넣지 않아요. 없으면 파일의 수정 날짜로 대신해요.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="c2">2. 형식 버전</h2>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>버전</th><th>언제 쓰나요</th></tr></thead>
+  <tbody>
+    <tr><th>1</th><td>잠긴 증거가 없는 사건. <code>caseFile</code>에 <code>unlocks</code> 키를 넣지 않아요.</td></tr>
+    <tr><th>2</th><td><code>unlocks</code>가 하나라도 있는 사건(결정적 증거 해금). 지금 앱이 읽을 수 있는 가장 높은 버전이에요.</td></tr>
+  </tbody>
+</table>
+</div>
+<ul>
+  <li>앱은 저장할 때마다 내용에 맞춰 버전을 다시 정해요. 잠긴 증거를 모두 빼면 1로, 하나라도 더하면 2로 저장해요.</li>
+  <li>앱이 읽을 수 있는 버전보다 높은 파일을 열면 "더 새로운 버전의 편집기로 만든 사건이에요. 앱을 업데이트한 뒤 다시 가져와 주세요."라고 안내해요. 이때 제목 · 장르 · 현장 배경만 읽어서 업데이트 안내 화면에 보여 줘요.</li>
+  <li>그래서 잠긴 증거가 없는 사건은 1로 두어야 형식 버전 2를 모르는 예전 앱에서도 열려요.</li>
+</ul>
+
+<h2 id="c3">3. caseFile</h2>
+<p>사건 내용이에요. "선택"이라고 적힌 키는 빼도 되고, 빼면 기본값으로 읽어요. 필수 키도 빈 문자열이나 빈 배열은 넣을 수 있지만, <a href="#c9">9장</a>의 검사에 걸릴 수 있어요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>필수</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>id</code></th><td>문자열</td><td>필수</td><td>사건 ID. 예: <code>case.glass-greenhouse</code></td></tr>
+    <tr><th><code>title</code></th><td>문자열</td><td>필수</td><td>사건 제목</td></tr>
+    <tr><th><code>clientName</code></th><td>문자열</td><td>필수</td><td>의뢰인 이름</td></tr>
+    <tr><th><code>briefing</code></th><td>문자열</td><td>필수</td><td>목록 · 둘러보기에 보이는 짧은 3인칭 소개(2~3문장)</td></tr>
+    <tr><th><code>clientRequest</code></th><td>문자열</td><td>선택(기본 <code>""</code>)</td><td>의뢰인이 직접 말하듯 쓴 의뢰 내용. 조사 화면의 '사건 개요' 탭에 보여요. 비어 있으면 <code>briefing</code>을 대신 보여 줘요.</td></tr>
+    <tr><th><code>clientPortraitImageName</code></th><td>문자열</td><td>선택(기본 <code>""</code>)</td><td>의뢰인 사진의 이미지 이름. 비어 있으면 이름 첫 글자로 그려요.</td></tr>
+    <tr><th><code>genre</code></th><td>문자열</td><td>선택(기본 <code>murder</code>)</td><td>장르. <a href="#c6">6장</a>의 일곱 값 중 하나</td></tr>
+    <tr><th><code>backdropImageName</code></th><td>문자열</td><td>필수</td><td>사건 현장 전경의 이미지 이름. 증거 탭 배너와 몰입 공간 배경에 써요.</td></tr>
+    <tr><th><code>sceneEvidence</code></th><td>배열</td><td>필수</td><td>현장 증거. <a href="#c4">4장</a></td></tr>
+    <tr><th><code>documentEvidence</code></th><td>배열</td><td>필수(빈 배열 가능)</td><td>문서 증거. <a href="#c4">4장</a></td></tr>
+    <tr><th><code>interviews</code></th><td>배열</td><td>필수</td><td>관계자와 진술. <a href="#c5">5장</a></td></tr>
+    <tr><th><code>motiveOptions</code></th><td>배열</td><td>선택(기본: 장르 기본 선택지)</td><td>'왜' 선택지. <a href="#c6">6장</a></td></tr>
+    <tr><th><code>methodOptions</code></th><td>배열</td><td>선택(기본: 장르 기본 선택지)</td><td>'어떻게' 선택지. <a href="#c6">6장</a></td></tr>
+    <tr><th><code>solution</code></th><td>객체</td><td>필수</td><td>정답. <a href="#c6">6장</a></td></tr>
+    <tr><th><code>hints</code></th><td>객체</td><td>필수</td><td>힌트 세 문장. <a href="#c6">6장</a></td></tr>
+    <tr><th><code>story</code></th><td>문자열</td><td>필수</td><td>사건의 실제 전말. 해결했거나 힌트를 보고도 못 풀었을 때 보여요.</td></tr>
+    <tr><th><code>unlocks</code></th><td>배열</td><td>선택(형식 버전 2)</td><td>잠긴 증거. <a href="#c7">7장</a>. 없으면 키를 넣지 않아요.</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="c4">4. 증거</h2>
+<p><strong>현장 증거</strong>(<code>sceneEvidence</code>의 항목). 키는 모두 필수예요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>id</code></th><td>문자열</td><td>증거 ID. 예: <code>evidence.cut-glass</code></td></tr>
+    <tr><th><code>imageName</code></th><td>문자열</td><td>증거 사진의 이미지 이름</td></tr>
+    <tr><th><code>caption</code></th><td>문자열</td><td>짧은 이름. 화면과 검사 안내에 이 이름이 나와요.</td></tr>
+    <tr><th><code>detail</code></th><td>문자열</td><td>자세한 설명</td></tr>
+    <tr><th><code>immersivePlacement</code></th><td>객체 <code>{"{ x, y, z }"}</code>(숫자)</td><td>Apple Vision Pro 몰입 공간에서 사용자 기준으로 놓이는 위치(미터)</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>문서 증거</strong>(<code>documentEvidence</code>의 항목). 키는 모두 필수예요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>id</code></th><td>문자열</td><td>증거 ID. 예: <code>document.ledger</code></td></tr>
+    <tr><th><code>title</code></th><td>문자열</td><td>문서 제목</td></tr>
+    <tr><th><code>body</code></th><td>문자열</td><td>문서 내용</td></tr>
+  </tbody>
+</table>
+</div>
+
+<h2 id="c5">5. 관계자와 진술</h2>
+<p><code>interviews</code>의 항목이에요. 키는 모두 필수예요. 앱은 관계자 전원을 범인 후보로 보여 줘요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>id</code></th><td>문자열</td><td>관계자 ID. 예: <code>person.tom</code></td></tr>
+    <tr><th><code>personName</code></th><td>문자열</td><td>이름</td></tr>
+    <tr><th><code>role</code></th><td>문자열</td><td><code>witness</code>(목격자) · <code>suspect</code>(용의자) · <code>client</code>(의뢰인) 중 하나</td></tr>
+    <tr><th><code>portraitImageName</code></th><td>문자열</td><td>프로필 사진의 이미지 이름</td></tr>
+    <tr><th><code>transcript</code></th><td>배열</td><td>진술. 한 줄은 <code>{"{ \"id\": 문자열, \"speaker\": 문자열, \"text\": 문자열 }"}</code></td></tr>
+  </tbody>
+</table>
+</div>
+<p><code>speaker</code>는 <code>holmes</code>(탐정의 질문) 또는 <code>interviewee</code>(관계자의 답)예요.</p>
+
+<h2 id="c6">6. 장르 · 선택지 · 정답 · 힌트</h2>
+<p><strong>장르</strong>마다 추리 문항 세 개(누가 · 왜 · 어떻게)의 이름과 기본 선택지가 달라요. <code>motiveOptions</code> · <code>methodOptions</code>를 빼면 아래 기본 선택지로 읽어요.</p>
+<div class="table-wrap">
+<table class="genres">
+  <thead><tr><th><code>genre</code></th><th>화면 이름</th><th>문항 이름</th><th>기본 '왜' id</th><th>기본 '어떻게' id</th></tr></thead>
+  <tbody>
+    {genres.map(([value, title, labels, motives, methods]) => (
+      <tr><th><code>{value}</code></th><td>{title}</td><td>{labels}</td><td>{motives}</td><td>{methods}</td></tr>
+    ))}
+  </tbody>
+</table>
+</div>
+<p><strong>선택지</strong>(<code>motiveOptions</code> · <code>methodOptions</code>의 항목)는 <code>{"{ \"id\": 문자열, \"title\": 문자열 }"}</code>이에요. <code>id</code>는 정답 비교와 저장에 쓰고, 화면에는 <code>title</code>이 보여요. 기본 선택지를 고치거나 더해도 돼요.</p>
+<p><strong>정답</strong>(<code>solution</code>). 키는 모두 필수예요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>culpritID</code></th><td>문자열</td><td>범인인 관계자의 <code>id</code></td></tr>
+    <tr><th><code>motive</code></th><td>문자열</td><td><code>motiveOptions</code> 중 정답의 <code>id</code></td></tr>
+    <tr><th><code>method</code></th><td>문자열</td><td><code>methodOptions</code> 중 정답의 <code>id</code></td></tr>
+    <tr><th><code>keyEvidenceIDs</code></th><td>문자열 배열</td><td>결정적 증거(현장 · 문서 증거)의 <code>id</code>. 순서는 상관없어요.</td></tr>
+  </tbody>
+</table>
+</div>
+<p><strong>힌트</strong>(<code>hints</code>)는 <code>{"{ \"culprit\": 문자열, \"motive\": 문자열, \"method\": 문자열 }"}</code>이에요. 장르마다 문항 이름은 달라도 키 이름은 같아요. 채점과 힌트를 보여 주는 방식은 <a href={url('guide.html#g1')}>사건 제작 가이드 1장</a>에 있어요.</p>
+
+<h2 id="c7">7. 잠긴 증거(unlocks)</h2>
+<p>처음에는 잠겨 있다가 단서를 확인하거나 답을 맞히면 열리는 증거예요. 하나라도 있으면 형식 버전 2예요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>필수</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>evidenceID</code></th><td>문자열</td><td>필수</td><td>잠글 현장 증거 또는 문서 증거의 <code>id</code></td></tr>
+    <tr><th><code>from</code></th><td>문자열 배열</td><td>선택(기본 <code>[]</code>)</td><td>확인해야 하는 단서(현장 · 문서 증거, 관계자)의 <code>id</code>. 증거는 상세 화면을 열면, 관계자는 진술을 열면 확인한 것으로 봐요.</td></tr>
+    <tr><th><code>needCount</code></th><td>정수</td><td>선택</td><td><code>from</code> 중 몇 개를 확인하면 열리는지. 없으면 전부</td></tr>
+    <tr><th><code>answer</code></th><td>객체</td><td>선택</td><td>답을 맞혀야 열리는 잠금이면 그 문제. <code>from</code> 조건을 채운 뒤(비어 있으면 처음부터) 입력칸이 나와요.</td></tr>
+  </tbody>
+</table>
+</div>
+<p><code>answer</code>의 키예요.</p>
+<div class="table-wrap">
+<table>
+  <thead><tr><th>키</th><th>타입</th><th>필수</th><th>설명</th></tr></thead>
+  <tbody>
+    <tr><th><code>prompt</code></th><td>문자열</td><td>필수</td><td>입력칸 위에 보이는 질문. 예: "금고의 번호는?"</td></tr>
+    <tr><th><code>accepted</code></th><td>문자열 배열</td><td>필수</td><td>정답으로 받는 값들</td></tr>
+    <tr><th><code>match</code></th><td>문자열</td><td>선택(기본 <code>text</code>)</td><td>비교 방법. 앱이 모르는 값도 <code>text</code>로 읽어요.</td></tr>
+  </tbody>
+</table>
+</div>
+<div class="table-wrap">
+<table>
+  <thead><tr><th><code>match</code></th><th>비교 방법</th><th>쓰는 곳</th></tr></thead>
+  <tbody>
+    <tr><th><code>digits</code></th><td>숫자만 남겨 비교해요(전각 숫자도 0~9로 맞춰요).</td><td>금고 번호, 연도</td></tr>
+    <tr><th><code>text</code></th><td>대소문자 · 공백 · 문장부호 · 기호를 무시해요.</td><td>낱말, 이름</td></tr>
+    <tr><th><code>exact</code></th><td>앞뒤 공백만 무시하고 그대로 비교해요.</td><td>정확히 맞혀야 하는 답</td></tr>
+  </tbody>
+</table>
+</div>
+<p>세 방법 모두 한글은 자모가 나뉘어 들어와도 같은 글자로 봐요.</p>
+
+<h2 id="c8">8. 이미지</h2>
+<ul>
+  <li><code>images</code>는 이미지 이름을 키로, 이미지 파일 내용을 Base64 문자열로 담은 객체예요.</li>
+  <li>키는 <code>caseFile</code> 안의 이미지 이름(<code>backdropImageName</code> · <code>clientPortraitImageName</code> · 현장 증거의 <code>imageName</code> · 관계자의 <code>portraitImageName</code>)과 똑같아야 해요. 이름만 있고 <code>images</code>에 그 키가 없으면 그 자리가 빈 칸으로 보여요.</li>
+  <li>이미지 이름은 비어 있으면 안 되고, <code>.</code>으로 시작하거나 <code>/</code> · <code>\</code> · <code>:</code>를 넣을 수 없어요. 어기면 "사건 파일 안의 이미지 이름이 올바르지 않아요"라며 파일을 열지 않아요.</li>
+  <li>사건에서 쓰지 않는 이미지는 앱이 저장할 때 빼요.</li>
+  <li>사진 없이 만들 때는 <code>images</code>를 <code>{"{}"}</code>로, 이미지 이름 칸을 모두 <code>""</code>로 두고, 가져온 뒤 앱 편집기에서 사진을 넣어요.</li>
+</ul>
+
+<h2 id="c9">9. 앱이 검사하는 것</h2>
+<p><strong>플레이할 수 없는 문제.</strong> 편집기의 '확인할 점'에 나오고, 하나라도 있으면 플레이할 수 없어요.</p>
+<ol>
+  <li><code>title</code> · <code>story</code>가 비어 있지 않아요.</li>
+  <li>현장 증거가 하나 이상, 관계자가 한 명 이상이에요.</li>
+  <li><code>solution.culpritID</code>가 관계자 중 한 명의 <code>id</code>예요.</li>
+  <li><code>motiveOptions</code> · <code>methodOptions</code>는 각각 두 개 이상이고, <code>title</code>이 빈 것이 없고, 같은 배열 안에서 <code>id</code>가 겹치지 않아요.</li>
+  <li><code>solution.motive</code> · <code>solution.method</code>가 각 선택지에 있는 <code>id</code>예요.</li>
+  <li><code>solution.keyEvidenceIDs</code>가 하나 이상이고, 모두 있는 증거의 <code>id</code>예요.</li>
+  <li>현장 증거 · 문서 증거 · 관계자의 <code>id</code>가 서로 겹치지 않아요.</li>
+  <li><code>hints</code>의 세 문장이 모두 비어 있지 않아요.</li>
+</ol>
+<p><code>unlocks</code>가 있으면 아래도 검사해요.</p>
+<ol start="9">
+  <li><code>evidenceID</code>는 있는 현장 · 문서 증거이고, 한 증거는 한 번만 잠가요.</li>
+  <li><code>from</code>에는 있는 증거 · 관계자만 넣고, 잠긴 증거 자신이나 같은 단서를 두 번 넣지 않아요.</li>
+  <li><code>answer</code>가 없으면 <code>from</code>이 비면 안 돼요. <code>needCount</code>는 1 이상, <code>from</code> 개수 이하예요.</li>
+  <li><code>answer.prompt</code>가 비어 있지 않고, <code>accepted</code>가 하나 이상이며 비교 방법을 적용해도 비지 않아요(<code>digits</code>면 숫자가 있어야 해요).</li>
+  <li>막다른 길이 없어요. 처음부터 열린 증거와 모든 관계자에서 시작해 확인을 이어 가면 모든 잠금이 열려요(답 잠금은 조건을 채우면 열 수 있다고 봐요).</li>
+</ol>
+<p><strong>사진이 빠진 곳.</strong> 플레이는 되지만 그 자리가 빈 칸으로 보여요. 편집기의 '확인할 점'과 공공 사건기록보관소에 올리기 전 검사에 나와요.</p>
+<ul>
+  <li>현장 배경 · 현장 증거 · 관계자 사진의 이름이 비어 있을 때</li>
+  <li>이름은 있는데 <code>images</code>에 그 이미지가 없거나 비어 있을 때(의뢰인 사진도 이때는 알려요. 의뢰인 사진은 이름을 비워 두면 기본 아이콘을 써요.)</li>
+</ul>
+
+<h2 id="c10">10. 예시</h2>
+<p>형식 버전 2(잠긴 증거 하나)인 지어낸 사건이에요. <code>images</code>의 값은 줄여 적었어요. 실제 파일에는 이미지 파일 전체를 Base64로 넣어야 열려요.</p>
+<Code code={example} lang="json" themes={{ light: 'github-light', dark: 'github-dark' }} />
+
+<footer>앱의 사건 파일 형식이나 검사 규칙이 바뀌면 이 문서도 함께 고쳐요.</footer>
+</LegalLayout>
+
+<style>
+  .genres td { font-size: 13px; }
+</style>

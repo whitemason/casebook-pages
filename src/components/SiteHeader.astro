@@ -2,26 +2,52 @@
 import { APP_STORE_URL, TESTFLIGHT_URL, url } from '../consts';
 
 interface Props {
-  current?: 'blog' | 'guide' | 'privacy' | 'terms' | 'press';
+  current?: 'blog' | 'guide' | 'casedoc' | 'privacy' | 'terms' | 'press';
   sticky?: boolean;
 }
 
 const { current, sticky = false } = Astro.props;
 
-const links = [
+type Link = { key: string; href: string; label: string };
+type Group = { label: string; children: Link[] };
+
+// 사건 크리에이터 문서는 하위 메뉴로 묶는다. 각 문서의 주소(guide.html · casedoc-protocol.html)는 메뉴와 상관없이 그대로 둔다.
+const links: (Link | Group)[] = [
   { key: 'blog', href: url('blog/'), label: '개발 블로그' },
-  { key: 'guide', href: url('guide.html'), label: '사건 제작 가이드' },
+  {
+    label: '사건 크리에이터 문서',
+    children: [
+      { key: 'guide', href: url('guide.html'), label: '사건 제작 가이드' },
+      { key: 'casedoc', href: url('casedoc-protocol.html'), label: 'Case Document 프로토콜' },
+    ],
+  },
   { key: 'privacy', href: url('privacy.html'), label: '개인정보 처리방침' },
   { key: 'terms', href: url('terms.html'), label: '이용약관' },
   { key: 'support', href: url('#support'), label: '지원' },
 ];
+const isGroup = (link: Link | Group): link is Group => 'children' in link;
+const inGroup = (group: Group) => group.children.some((child) => child.key === current);
 ---
 <header class:list={['site-header', { sticky }]}>
   <nav aria-label="사이트" class="wrap bar">
     <a class="brand" href={url()}>Casebook</a>
     <div class="actions">
       <ul class="links">
-        {links.map((link) => (
+        {links.map((link) => isGroup(link) ? (
+          <li>
+            <details class="group">
+              <summary class:list={{ active: inGroup(link) }}>
+                {link.label}
+                <svg width="9" height="9" viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 3.5l3 3 3-3"></path></svg>
+              </summary>
+              <ul>
+                {link.children.map((child) => (
+                  <li><a href={child.href} aria-current={current === child.key ? 'page' : undefined}>{child.label}</a></li>
+                ))}
+              </ul>
+            </details>
+          </li>
+        ) : (
           <li><a href={link.href} aria-current={current === link.key ? 'page' : undefined}>{link.label}</a></li>
         ))}
       </ul>
@@ -35,7 +61,16 @@ const links = [
           <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><path d="M2 6h14M2 12h14"></path></svg>
         </summary>
         <ul>
-          {links.map((link) => (
+          {links.map((link) => isGroup(link) ? (
+            <li>
+              <span class="menu-heading">{link.label}</span>
+              <ul class="sub">
+                {link.children.map((child) => (
+                  <li><a href={child.href} aria-current={current === child.key ? 'page' : undefined}>{child.label}</a></li>
+                ))}
+              </ul>
+            </li>
+          ) : (
             <li><a href={link.href} aria-current={current === link.key ? 'page' : undefined}>{link.label}</a></li>
           ))}
         </ul>
@@ -45,9 +80,8 @@ const links = [
 </header>
 
 <script>
-  // 메뉴 바깥을 누르거나 Esc를 누르면 메뉴를 닫는다.
-  const menu = document.querySelector<HTMLDetailsElement>('.site-header .menu');
-  if (menu) {
+  // 메뉴 · 하위 메뉴 바깥을 누르거나 Esc를 누르면 닫는다.
+  for (const menu of document.querySelectorAll<HTMLDetailsElement>('.site-header .menu, .site-header .group')) {
     document.addEventListener('click', (event) => {
       if (menu.open && !menu.contains(event.target as Node)) menu.open = false;
     });
@@ -86,6 +120,40 @@ const links = [
   .links a { display: block; padding: 14px 0; }
   .links a:hover, .menu a:hover { opacity: 1; text-decoration: none; color: var(--fg); }
   a[aria-current='page'] { font-weight: 600; opacity: 1; }
+
+  /* 상단 막대의 하위 메뉴(사건 크리에이터 문서) */
+  .group { position: relative; }
+  .group summary {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    padding: 14px 0;
+    color: var(--fg);
+    opacity: 0.85;
+    cursor: pointer;
+  }
+  .group summary::-webkit-details-marker { display: none; }
+  .group summary:hover, .group[open] summary { opacity: 1; }
+  .group summary.active { font-weight: 600; opacity: 1; }
+  .group summary svg { transition: transform 0.2s; }
+  .group[open] summary svg { transform: rotate(180deg); }
+  .group ul {
+    position: absolute;
+    left: -16px;
+    top: 44px;
+    min-width: 220px;
+    padding: 8px 0;
+    border-radius: var(--radius-sm);
+    background: var(--tile);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.16);
+    border: 1px solid var(--bar-line);
+  }
+  .group ul a { display: block; padding: 10px 16px; font-size: 14px; white-space: nowrap; }
+
+  .menu-heading { display: block; padding: 12px 20px 4px; font-size: 13px; color: var(--muted); }
+  .menu ul.sub { position: static; min-width: 0; padding: 0; border: 0; border-radius: 0; background: none; box-shadow: none; }
+  .menu .sub a { padding: 8px 20px 8px 32px; }
   .download { min-height: 28px; padding: 0 12px; font-size: 12px; white-space: nowrap; }
 
   .menu { display: none; position: relative; }
