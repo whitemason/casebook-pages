@@ -50,3 +50,7 @@ npm run build    # 빌드(커밋 전에 경고 없이 성공해야 해요)
 - Case Document 프로토콜(`src/pages/casedoc-protocol.astro`, 사건 파일 `.casedoc` 형식 설명)은 앱 코드를 그대로 옮긴 문서예요. 앱의 사건 형식(casebook-service-appleos CasebookFoundation의 `CasePackage` · `CaseFile` 등)이나 검사 규칙이 바뀌면 이 문서도 함께 고쳐요.
 - App Store · TestFlight 링크는 `src/consts.ts`의 `APP_STORE_URL` · `TESTFLIGHT_URL`에서 바꿔요.
 - Press 버전 페이지(`press/versions.html`)의 데이터는 casebook-press의 Press 판 태그에서 `npm run press-versions -- press-N`으로 가져와요. `src/data/press-versions.json`은 손으로 고치지 않아요. 공개한 뒤에는 주소와 판 앵커(`#press-N`)를 바꾸지 않아요.
+
+## 라이선스
+
+코드는 MIT 라이선스(LICENSE)를 따릅니다. 로고 · 로고 애니메이션 · 워드마크 · 앱 아이콘 · 그림과 글(블로그 글, 개인정보 처리방침 · 이용약관 본문 포함)은 Whitemason의 저작물로 MIT 라이선스에 포함되지 않으며, 모든 권리를 보유합니다(All rights reserved).
