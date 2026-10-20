@@ -1,7 +1,7 @@
 ---
 title: "게으른 개발자가 Casebook 서비스를 혼자 개발한 방식"
 date: 2026-10-08
-category: 작업 기록
+category: 인사이트
 summary: 혼자 운영하는 추리 게임 서비스를 앱, 서버, 운영 도구, 배포 파이프라인으로 어떻게 나누고 연결했는지 정리합니다.
 author: x-0o0
 cover: how-casebook-is-built-cover.webp

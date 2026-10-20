@@ -1,7 +1,7 @@
 ---
 title: "4개의 플랫폼 앱 코드를 Swift Package 하나로 관리하기"
 date: 2026-10-13
-category: 작업 기록
+category: 인사이트
 summary: iPhone, iPad, Mac, Apple Vision Pro 앱 하나를 로컬 Swift 패키지의 Module 일곱 개로 나눈 방식과, 다른 팀의 모듈화 방식에서 가져온 것과 가져오지 않은 것을 정리합니다.
 author: x-0o0
 cover: casebook-app-architecture-cover.webp

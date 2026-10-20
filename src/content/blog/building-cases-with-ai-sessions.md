@@ -1,7 +1,7 @@
 ---
 title: "AI 세션을 역할별로 나눠 추리 사건 만들기: 사건 두 개로 배운 것과 MCP로 가는 길"
 date: 2026-10-17
-category: 작업 기록
+category: 인사이트
 summary: 스토리, 추리, 비평, 검수 세션이 협업해 사건 두 개를 만들고 고친 과정과, 그 경험을 지식 베이스로 정리해 MCP 도구로 발전시키려는 계획을 정리합니다.
 author: taekssi
 cover: how-casebook-is-built-cover.webp

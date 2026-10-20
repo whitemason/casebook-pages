@@ -2,7 +2,7 @@ import { defineCollection } from 'astro:content';
 import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
-export const categories = ['개발일지', '작업 기록', '릴리스 노트', 'MCP 릴리스 노트'] as const;
+export const categories = ['개발일지', '인사이트', '릴리스 노트', 'MCP 릴리스 노트'] as const;
 
 /** 개발일지 글은 모두 이 커버를 쓴다. cover를 비워 두면 자동으로 이 그림이 들어간다. */
 export const DEVLOG_COVER = 'devlog-cover.webp';

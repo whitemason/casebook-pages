@@ -1,7 +1,7 @@
 ---
 title: "코딩 에이전트 규칙을 AGENTS.md, rules, skills로 나누기"
 date: 2026-10-14
-category: 작업 기록
+category: 인사이트
 summary: Claude Code 문서의 메모리 구조를 따라, 여섯 개 저장소의 에이전트 규칙을 매번 읽는 규칙과 경로별 규칙, 필요할 때만 읽는 절차로 나눈 기준을 정리합니다.
 author: x-0o0
 cover: agents-md-cover.webp

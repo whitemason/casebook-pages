@@ -1,7 +1,7 @@
 ---
 title: "원작 소설을 플레이할 수 있는 추리 사건으로 만들기"
 date: 2026-10-11
-category: 작업 기록
+category: 인사이트
 summary: 셜록 홈즈의 첫 단편 "보헤미아의 스캔들"을 Casebook 사건으로 만든 과정을 예로, AI와 함께 사건을 구성하고 증거를 나누고 이미지를 만드는 순서와 실제로 쓴 프롬프트를 정리합니다.
 author: x-0o0
 cover: making-bohemia-case-cover.webp

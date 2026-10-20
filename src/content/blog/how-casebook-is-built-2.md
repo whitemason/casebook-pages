@@ -1,7 +1,7 @@
 ---
 title: "게으른 개발자가 Casebook 서비스를 혼자 개발한 방식 2 - 여러 코딩 에이전트 세션과 일하기"
 date: 2026-10-09
-category: 작업 기록
+category: 인사이트
 summary: 저장소와 역할마다 코딩 에이전트 세션을 나누고, 사람은 한 세션하고만 대화하며 결정만 내리는 방식을 정리합니다.
 author: x-0o0
 cover: how-casebook-is-built-cover.webp

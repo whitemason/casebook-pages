@@ -8,7 +8,7 @@ import { getPosts } from '../../consts';
 const posts = await getPosts();
 const [latest] = posts;
 ---
-<BaseLayout title="개발 블로그 · Casebook" description="Casebook을 만들며 남기는 개발일지, 작업 기록, 릴리스 노트" current="blog" alt>
+<BaseLayout title="개발 블로그 · Casebook" description="Casebook을 만들며 남기는 개발일지, 인사이트, 릴리스 노트" current="blog" alt>
   <main class="wrap page">
     <h1>개발 블로그</h1>
     {latest ? (
